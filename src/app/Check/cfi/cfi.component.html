@@ -1,0 +1,80 @@
+<body>
+    <div class="navbar">
+        <a routerLink="/home">Home</a>
+        <div class="dropdown">
+            <button class="dropbtn">Learn
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a routerLink="/LearnMCA">Multiple Choice</a>
+                <a routerLink="/LearnSCA">Single Choice</a>
+                <a routerLink="/LearnFIA">Fill In</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Check
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a routerLink="/CMC">Multiple Choice</a>
+                <a routerLink="/CSC">Single Choice</a>
+                <a routerLink="/CFI">Fill In</a>
+            </div>
+        </div>
+        <div class="navbar">
+            <a routerLink="/EA">Exam</a>
+        </div>
+    </div>
+
+
+    <div class="navbarII">
+        <button class="button" (click)="fq()">first</button>
+        <button class="button" (click)="pq()">prev</button>
+        <button class="button" (click)="nq()">next</button>
+        <button class="button" (click)="lq()">last</button>
+        <button class="buttonII" (click)="toggleA(query.qid)">Richtig ist</button>
+    </div>
+    <hr>
+    <div class="statistics">
+        qnum: {{statistic.qmaxnumber}} /
+        answer: {{statistic.qanswered}} /
+        noanswer: {{statistic.qnotanswered}} /
+        wrong: {{statistic.qwrong}} /
+        correct: {{statistic.qcorrect}}
+    </div>
+    <hr>
+    <div *ngIf="query.qtyp === 'fi'">
+        <p>Question: {{ query.qid }} | Typ: {{ query.qtyp }} <br /></p>
+        <hr>
+        <div *ngFor="let qt of query.qtxt">
+            <span *ngIf="qt[0] === ' '"> _ {{ qt }} <br /> </span>
+            <span *ngIf="qt[0] != ' '"> {{ qt }} <br /> </span>
+        </div>
+        <div *ngFor="let ans of query.qanswers; index as k">
+            <span *ngIf="sa">
+                <span *ngIf="na === query.qid" class="green">
+                    {{ k + 1 }}: {{ ans.txt }}
+                </span>
+                <span *ngIf="na != query.qid">
+                    {{ k + 1 }}:
+                    <input type="text" value="{{ ans.txt }}" />
+                </span>
+            </span>
+            <div>
+                <span *ngIf="correctInput">
+                    <span *ngIf="!sa">
+                        {{ k + 1 }}:
+                        <input type="text" #input (keyup)="keyinput(input.value)" value="{{ query.qgiventxt }}"
+                            class="green" llceaeAutoFocusInput (keyup.enter)="nq()" /></span>
+                </span>
+                <span *ngIf="!correctInput">
+                    <span *ngIf="!sa">
+                        {{ k + 1 }}:
+                        <input type="text" #input (keyup)="keyinput(input.value)" value="{{ query.qgiventxt }}"
+                            llceaeAutoFocusInput (keyup.enter)="nq()" /></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <hr>
+</body>
