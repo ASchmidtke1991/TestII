@@ -10,11 +10,11 @@ import { StatsService } from 'src/app/Shared/stats.service';
   styleUrls: ['./efi.component.css']
 })
 export class EFIComponent {
-  ql101Fiall: FIQ[] = []
+  fia: FIQ[] = []
   sa = false
-  queryNrAnswersShow = -1
+  qnas = -1
   query: FIQ;
-  currentQnr = -1
+  cn = -1
   statistic: Stats;
   correctInput: boolean = false;
   gotolearnmode: boolean
@@ -30,16 +30,16 @@ export class EFIComponent {
   showResultQuestions = false
 
   constructor(
-    private ql101Fi: LpicService,
+    private fi: LpicService,
     private stats: StatsService
   ) {
-    this.ql101Fiall = this.ql101Fi.getFI()
-    this.ql101Fi.initGivenAnswers()
+    this.fia = this.fi.getFI()
+    this.fi.initGivenAnswers()
 
     this.statistic = this.stats.calcStatsFi()
 
-    this.currentQnr = 0
-    this.query = this.ql101Fiall[this.currentQnr]
+    this.cn = 0
+    this.query = this.fia[this.cn]
     this.gotolearnmode = false
     this.examwrong = 0
     this.learnwrong = 0
@@ -52,7 +52,7 @@ export class EFIComponent {
   }
   resetAnswers() {
     // reset 'givenanswer's of all questions
-    this.ql101Fiall.map(q => q.qanswers.map(a => a.givenans = false))
+    this.fia.map(q => q.qanswers.map(a => a.givenans = false))
     this.resetStats()
     this.firstQuery()
     this.examwrong = 0
@@ -61,15 +61,15 @@ export class EFIComponent {
     this.statistic = this.stats.calcStatsFi()
   }
   firstQuery() {
-    this.currentQnr = 0
-    this.query = this.ql101Fiall[this.currentQnr]
+    this.cn = 0
+    this.query = this.fia[this.cn]
     this.sa = false
     this.refreshStats()
   }
   prevQuery() {
-    if (0 < this.currentQnr) {
-      this.currentQnr--
-      this.query = this.ql101Fiall[this.currentQnr]
+    if (0 < this.cn) {
+      this.cn--
+      this.query = this.fia[this.cn]
     }
     this.sa = false
     this.refreshStats()
@@ -91,8 +91,8 @@ export class EFIComponent {
         // this.prevQuery()
         this.refreshStats()
         console.log('Learn wrong: ', this.examwrong)
-        console.log(this.examwrong,this.ql101Fiall.length,this.maxexamwrong)
-        if ((100 * (this.examwrong / this.ql101Fiall.length)) > this.maxexamwrong) {
+        console.log(this.examwrong,this.fia.length,this.maxexamwrong)
+        if ((100 * (this.examwrong / this.fia.length)) > this.maxexamwrong) {
           // x% wrong, this is bad :( - popup and go to learn mode
           this.gotolearnmode = true
         }
@@ -109,23 +109,23 @@ export class EFIComponent {
     // console.log('curr q: ', this.currentQnr)
   }
   setNextQuestion() {
-    if (this.currentQnr < this.ql101Fiall.length - 1) {
-      this.currentQnr++
-      this.query = this.ql101Fiall[this.currentQnr]
-      console.log(this.currentQnr, this.query)
+    if (this.cn < this.fia.length - 1) {
+      this.cn++
+      this.query = this.fia[this.cn]
+      console.log(this.cn, this.query)
     }
     this.sa = false
     this.refreshStats()
   }
   lastQuery() {
-    this.currentQnr = this.ql101Fiall.length - 1
-    this.query = this.ql101Fiall[this.currentQnr]
+    this.cn = this.fia.length - 1
+    this.query = this.fia[this.cn]
     this.sa = false
     this.refreshStats()
   }
   toggleAnswers(qid: number): void {
-    if (this.queryNrAnswersShow != qid) {
-      this.queryNrAnswersShow = qid;
+    if (this.qnas != qid) {
+      this.qnas = qid;
       this.sa = true
     } else {
       this.sa = !this.sa

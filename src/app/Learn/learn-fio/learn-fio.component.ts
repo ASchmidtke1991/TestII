@@ -22,10 +22,6 @@ export class LearnFIOComponent {
     this.cn = 0
     this.query = this.fio[this.cn]
   }
-  fq() {
-      this.cn = 0
-      this.query = this.fio[this.cn]
-  }
   pq() {
     if (0 < this.cn) {
       this.cn--
@@ -39,10 +35,6 @@ export class LearnFIOComponent {
       console.log(this.cn, this.query)
     }
   }
-  lq() {
-    this.cn = this.fio.length - 1
-    this.query = this.fio[this.cn]
-}
   toggleAnswers(qid: number): void {
     if (this.qnas != qid) {
       this.qnas = qid;

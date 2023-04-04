@@ -51,7 +51,7 @@
   </div>
 
   <hr>
-  <p>Question: {{ query.qid }} | Typ: {{ query.qtyp }} <br /></p>
+  <p>Question: {{ query.qid }} | Typ: {{ query.qtyp }} <br/></p>
   <hr>
   <div *ngFor="let qt of query.qtxt">
     <span *ngIf="qt[0] === ' '"> _ {{ qt }} <br /> </span>
@@ -62,28 +62,28 @@
       <span *ngIf="sa">
         <span *ngIf="ans.correct">
           <span *ngIf="na === query.qid" class="green">
-            <input type="checkbox" (click)="ans.givenans = !ans.givenans" checked disabled />
+            <input type="checkbox" (click)="ans.givenans = !ans.givenans" checked disabled/>
             {{ ansind + 1 }}: {{ ans.txt }}
           </span>
         </span>
         <span *ngIf="!ans.correct">
           <span *ngIf="na === query.qid">
-            <input type="checkbox" (click)="toggleAns(ansind)" disabled />
+            <input type="checkbox" (click)="toggleAns(ansind)" disabled/>
             {{ ansind + 1 }}: {{ ans.txt }}
           </span>
         </span>
         <span *ngIf="na != query.qid">
-          <input type="checkbox" (click)="toggleAns(ansind)" disabled />
+          <input type="checkbox" (click)="toggleAns(ansind)" disabled/>
           {{ ansind + 1 }}: {{ ans.txt }}
         </span>
       </span>
       <span *ngIf="!sa">
         <div *ngIf="ans.givenans">
-          <input type="checkbox" (click)="toggleAns(ansind)" checked />
+          <input type="checkbox" (click)="toggleAns(ansind)" checked/>
           {{ ansind + 1 }}: {{ ans.txt }}
         </div>
         <div *ngIf="!ans.givenans">
-          <input type="checkbox" (click)="toggleAns(ansind)" />
+          <input type="checkbox" (click)="toggleAns(ansind)"/>
           {{ ansind + 1 }}: {{ ans.txt }}
         </div>
       </span>

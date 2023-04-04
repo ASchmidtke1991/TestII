@@ -10,37 +10,31 @@ import { StatsService } from 'src/app/Shared/stats.service';
   styleUrls: ['./emc.component.css']
 })
 export class EMCComponent {
-
-  ql101mcall: MCQ[] = []
-
-  showanswers = false
-  queryNrAnswersShow = -1
-
+  mca: MCQ[] = []
+  sa = false
+  qnas = -1
   query: MCQ;
   currentQnr = -1
-
   statistic: Stats;
   gotolearnmode: boolean
-
   // maxexamwrong in %
   maxexamwrong = 20
   // examwrong number of wrong questions
   examwrong: number
-
   examresult = false
   showResultQuestions = false
 
   constructor(
-    private ql101Mc: LpicService,
+    private mc: LpicService,
     private stats: StatsService
   ) {
-    this.ql101mcall = this.ql101Mc.getMC()
-    this.ql101Mc.initGivenAnswers()
+    this.mca = this.mc.getMC()
+    this.mc.initGivenAnswers()
 
     this.statistic = this.stats.calcStatsMc()
 
     this.currentQnr = 0
-    this.query = this.ql101mcall[this.currentQnr]
+    this.query = this.mca[this.currentQnr]
     this.gotolearnmode = false
     this.examwrong = 0
   }
@@ -55,7 +49,7 @@ export class EMCComponent {
 
   resetAnswers() {
     // reset 'givenanswer's of all questions
-    this.ql101mcall.map(q => q.qanswers.map(a => a.givenans = false))
+    this.mca.map(q => q.qanswers.map(a => a.givenans = false))
     this.resetStats()
     this.firstQuery()
     this.examwrong = 0
@@ -67,17 +61,17 @@ export class EMCComponent {
 
   firstQuery() {
     this.currentQnr = 0
-    this.query = this.ql101mcall[this.currentQnr]
-    this.showanswers = false
+    this.query = this.mca[this.currentQnr]
+    this.sa = false
     this.refreshStats()
   }
 
   prevQuery() {
     if (0 < this.currentQnr) {
       this.currentQnr--
-      this.query = this.ql101mcall[this.currentQnr]
+      this.query = this.mca[this.currentQnr]
     }
-    this.showanswers = false
+    this.sa = false
     this.refreshStats()
   }
 
@@ -98,8 +92,8 @@ export class EMCComponent {
         // this.prevQuery()
         this.refreshStats()
         console.log('Learn wrong: ', this.examwrong)
-        console.log(this.examwrong,this.ql101mcall.length,this.maxexamwrong)
-        if ((100 * (this.examwrong / this.ql101mcall.length)) > this.maxexamwrong) {
+        console.log(this.examwrong,this.mca.length,this.maxexamwrong)
+        if ((100 * (this.examwrong / this.mca.length)) > this.maxexamwrong) {
           // x% wrong, this is bad :( - popup and go to learn mode
           this.gotolearnmode = true
         }
@@ -117,28 +111,28 @@ export class EMCComponent {
   }
 
   setNextQuestion() {
-    if (this.currentQnr < this.ql101mcall.length - 1) {
+    if (this.currentQnr < this.mca.length - 1) {
       this.currentQnr++
-      this.query = this.ql101mcall[this.currentQnr]
+      this.query = this.mca[this.currentQnr]
       console.log(this.currentQnr, this.query)
     }
-    this.showanswers = false
+    this.sa = false
     this.refreshStats()
   }
 
   lastQuery() {
-    this.currentQnr = this.ql101mcall.length - 1
-    this.query = this.ql101mcall[this.currentQnr]
-    this.showanswers = false
+    this.currentQnr = this.mca.length - 1
+    this.query = this.mca[this.currentQnr]
+    this.sa = false
     this.refreshStats()
   }
 
   toggleAnswers(qid: number): void {
-    if (this.queryNrAnswersShow != qid) {
-      this.queryNrAnswersShow = qid;
-      this.showanswers = true
+    if (this.qnas != qid) {
+      this.qnas = qid;
+      this.sa = true
     } else {
-      this.showanswers = !this.showanswers
+      this.sa = !this.sa
     }
     this.refreshStats()
   }
@@ -174,6 +168,6 @@ export class EMCComponent {
   examEnd() {
     this.refreshStats()
     this.examresult = true
-    this.showanswers = true
+    this.sa = true
   }
 }

@@ -51,7 +51,7 @@
     </div>
     <hr>
     <div *ngIf="query.qtyp === 'fi'">
-        <p>Question: {{ query.qid }} | Typ: {{ query.qtyp }} <br /></p>
+        <p>Question: {{ query.qid }} | Typ: {{ query.qtyp }} <br/></p>
         <hr>
         <div *ngFor="let qt of query.qtxt">
             <span *ngIf="qt[0] === ' '"> _ {{ qt }} <br /> </span>
@@ -64,7 +64,7 @@
                 </span>
                 <span *ngIf="na != query.qid">
                     {{ k + 1 }}:
-                    <input type="text" value="{{ ans.txt }}" />
+                    <input type="text" value="{{ ans.txt }}"/>
                 </span>
             </span>
             <div>
@@ -72,13 +72,13 @@
                     <span *ngIf="!sa">
                         {{ k + 1 }}:
                         <input type="text" #input (keyup)="keyinput(input.value)" value="{{ query.qgiventxt }}"
-                            class="green" llceaeAutoFocusInput (keyup.enter)="nq()" /></span>
+                            class="green" llceaeAutoFocusInput (keyup.enter)="nq()"/></span>
                 </span>
                 <span *ngIf="!correctInput">
                     <span *ngIf="!sa">
                         {{ k + 1 }}:
                         <input type="text" #input (keyup)="keyinput(input.value)" value="{{ query.qgiventxt }}"
-                            llceaeAutoFocusInput (keyup.enter)="nq()" /></span>
+                            llceaeAutoFocusInput (keyup.enter)="nq()"/></span>
                 </span>
             </div>
         </div>

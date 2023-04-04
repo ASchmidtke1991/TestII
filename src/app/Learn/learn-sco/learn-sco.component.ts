@@ -23,10 +23,6 @@ export class LearnSCOComponent {
     this.cn = 0
     this.query = this.sco[this.cn]
   }
-  fq() {
-    this.cn = 0
-    this.query = this.sco[this.cn]
-  }
   pq() {
     if (0 < this.cn) {
       this.cn--
@@ -39,10 +35,6 @@ export class LearnSCOComponent {
       this.query = this.sco[this.cn]
       console.log(this.cn, this.query)
     }
-  }
-  lq() {
-    this.cn = this.sco.length - 1
-    this.query = this.sco[this.cn]
   }
   toggleAnswers(qid: number): void {
     if (this.qnas != qid) {

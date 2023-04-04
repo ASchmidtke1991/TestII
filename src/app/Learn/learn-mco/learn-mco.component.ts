@@ -23,10 +23,6 @@ export class LearnMCOComponent {
     this.cn = 0
     this.query = this.mco[this.cn]
   }
-  fq() {
-      this.cn = 0
-      this.query = this.mco[this.cn]
-  }
   pq() {
     if (0 < this.cn) {
       this.cn--
@@ -40,10 +36,6 @@ export class LearnMCOComponent {
       console.log(this.cn, this.query)
     }
   }
-  lq() {
-    this.cn = this.mco.length - 1
-    this.query = this.mco[this.cn]
-}
   toggleAnswers(qid: number): void {
     if (this.qnas != qid) {
       this.qnas = qid;

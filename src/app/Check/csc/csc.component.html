@@ -49,39 +49,39 @@
         correct: {{statistic.qcorrect}}
     </div>
     <hr>
-    <p>Question: {{ query.qid }} | Typ: {{ query.qtyp }} <br /></p>
+    <p>Question: {{ query.qid }} | Typ: {{ query.qtyp }} <br/></p>
     <hr>
     <div *ngFor="let qt of query.qtxt">
-        <span *ngIf="qt[0] === ' '"> _ {{ qt }} <br /> </span>
-        <span *ngIf="qt[0] != ' '"> {{ qt }} <br /> </span>
+        <span *ngIf="qt[0] === ' '"> _ {{ qt }} <br/> </span>
+        <span *ngIf="qt[0] != ' '"> {{ qt }} <br/> </span>
     </div>
     <div *ngIf="query.qtyp === 'sc'">
         <div *ngFor="let ans of query.qanswers; index as ansind">
             <span *ngIf="sa">
                 <span *ngIf="ans.correct">
                     <span *ngIf="na === query.qid" class="green">
-                        <input type="radio" (click)="ans.givenans = !ans.givenans" checked disabled />
+                        <input type="radio" (click)="ans.givenans = !ans.givenans" checked disabled/>
                         {{ ansind + 1 }}: {{ ans.txt }}
                     </span>
                 </span>
                 <span *ngIf="!ans.correct">
                     <span *ngIf="na === query.qid">
-                        <input type="radio" (click)="changeGivenAnswer(ansind)" disabled />
+                        <input type="radio" (click)="changeGivenAnswer(ansind)" disabled/>
                         {{ ansind + 1 }}: {{ ans.txt }}
                     </span>
                 </span>
                 <span *ngIf="na != query.qid">
-                    <input type="radio" (click)="changeGivenAnswer(ansind)" disabled />
+                    <input type="radio" (click)="changeGivenAnswer(ansind)" disabled/>
                     {{ ansind + 1 }}: {{ ans.txt }}
                 </span>
             </span>
             <span *ngIf="!sa">
                 <div *ngIf="ans.givenans">
-                    <input type="radio" (click)="changeGivenAnswer(ansind)" checked />
+                    <input type="radio" (click)="changeGivenAnswer(ansind)" checked/>
                     {{ ansind + 1 }}: {{ ans.txt }}
                 </div>
                 <div *ngIf="!ans.givenans">
-                    <input type="radio" (click)="changeGivenAnswer(ansind)" />
+                    <input type="radio" (click)="changeGivenAnswer(ansind)"/>
                     {{ ansind + 1 }}: {{ ans.txt }}
                 </div>
             </span>

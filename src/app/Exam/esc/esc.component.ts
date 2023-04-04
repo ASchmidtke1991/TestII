@@ -11,36 +11,31 @@ import { StatsService } from 'src/app/Shared/stats.service';
 })
 export class ESCComponent {
 
-  ql101Scall: SCQ[] = []
-
+  sca: SCQ[] = []
   sa = false
-  queryNrAnswersShow = -1
-
+  qnas = -1
   query: SCQ;
-  currentQnr = -1
-
+  cn = -1
   statistic: Stats;
   gotolearnmode: boolean
-
   // maxexamwrong in %
   maxexamwrong = 20
   // examwrong number of wrong questions
   examwrong: number
-
   examresult = false
   showResultQuestions = false
 
   constructor(
-    private ql101Sc: LpicService,
+    private sc: LpicService,
     private stats: StatsService
   ) {
-    this.ql101Scall = this.ql101Sc.getSC()
-    this.ql101Sc.initGivenAnswers()
+    this.sca = this.sc.getSC()
+    this.sc.initGivenAnswers()
 
     this.statistic = this.stats.calcStatsSc()
 
-    this.currentQnr = 0
-    this.query = this.ql101Scall[this.currentQnr]
+    this.cn = 0
+    this.query = this.sca[this.cn]
     this.gotolearnmode = false
     this.examwrong = 0
   }
@@ -55,7 +50,7 @@ export class ESCComponent {
 
   resetAnswers() {
     // reset 'givenanswer's of all questions
-    this.ql101Scall.map(q => q.qanswers.map(a => a.givenans = false))
+    this.sca.map(q => q.qanswers.map(a => a.givenans = false))
     this.resetStats()
     this.firstQuery()
     this.examwrong = 0
@@ -66,16 +61,16 @@ export class ESCComponent {
   }
 
   firstQuery() {
-    this.currentQnr = 0
-    this.query = this.ql101Scall[this.currentQnr]
+    this.cn = 0
+    this.query = this.sca[this.cn]
     this.sa = false
     this.refreshStats()
   }
 
   prevQuery() {
-    if (0 < this.currentQnr) {
-      this.currentQnr--
-      this.query = this.ql101Scall[this.currentQnr]
+    if (0 < this.cn) {
+      this.cn--
+      this.query = this.sca[this.cn]
     }
     this.sa = false
     this.refreshStats()
@@ -98,8 +93,8 @@ export class ESCComponent {
         // this.prevQuery()
         this.refreshStats()
         console.log('Learn wrong: ', this.examwrong)
-        console.log(this.examwrong,this.ql101Scall.length,this.maxexamwrong)
-        if ((100 * (this.examwrong / this.ql101Scall.length)) > this.maxexamwrong) {
+        console.log(this.examwrong,this.sca.length,this.maxexamwrong)
+        if ((100 * (this.examwrong / this.sca.length)) > this.maxexamwrong) {
           // x% wrong, this is bad :( - popup and go to learn mode
           this.gotolearnmode = true
         }
@@ -117,25 +112,25 @@ export class ESCComponent {
   }
 
   setNextQuestion() {
-    if (this.currentQnr < this.ql101Scall.length - 1) {
-      this.currentQnr++
-      this.query = this.ql101Scall[this.currentQnr]
-      console.log(this.currentQnr, this.query)
+    if (this.cn < this.sca.length - 1) {
+      this.cn++
+      this.query = this.sca[this.cn]
+      console.log(this.cn, this.query)
     }
     this.sa = false
     this.refreshStats()
   }
 
   lastQuery() {
-    this.currentQnr = this.ql101Scall.length - 1
-    this.query = this.ql101Scall[this.currentQnr]
+    this.cn = this.sca.length - 1
+    this.query = this.sca[this.cn]
     this.sa = false
     this.refreshStats()
   }
 
   toggleAnswers(qid: number): void {
-    if (this.queryNrAnswersShow != qid) {
-      this.queryNrAnswersShow = qid;
+    if (this.qnas != qid) {
+      this.qnas = qid;
       this.sa = true
     } else {
       this.sa = !this.sa
