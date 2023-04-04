@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { MCQ } from 'src/app/Interface/mcq';
+import { Stats } from 'src/app/Interface/stats';
+import { LpicService } from 'src/app/Shared/lpic.service';
+import { StatsService } from 'src/app/Shared/stats.service';
 
 @Component({
   selector: 'app-emc',
@@ -7,15 +11,15 @@ import { Component } from '@angular/core';
 })
 export class EMCComponent {
 
-  ql101mcall: McQuery[] = []
+  ql101mcall: MCQ[] = []
 
   showanswers = false
   queryNrAnswersShow = -1
 
-  query: McQuery;
+  query: MCQ;
   currentQnr = -1
 
-  statistic: Statistics;
+  statistic: Stats;
   gotolearnmode: boolean
 
   // maxexamwrong in %
@@ -27,10 +31,10 @@ export class EMCComponent {
   showResultQuestions = false
 
   constructor(
-    private ql101Mc: Qlpic101Service,
+    private ql101Mc: LpicService,
     private stats: StatsService
   ) {
-    this.ql101mcall = this.ql101Mc.getallMc()
+    this.ql101mcall = this.ql101Mc.getMC()
     this.ql101Mc.initGivenAnswers()
 
     this.statistic = this.stats.calcStatsMc()
@@ -172,6 +176,4 @@ export class EMCComponent {
     this.examresult = true
     this.showanswers = true
   }
-}
-
 }

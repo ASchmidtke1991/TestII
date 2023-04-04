@@ -1,44 +1,48 @@
-<p>esc works!</p>
+<body>
+  <div class="navbar">
+    <a routerLink="/home">Home</a>
+    <div class="dropdown">
+      <button class="dropbtn">Learn
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <a routerLink="/LearnMCA">Multiple Choice</a>
+        <a routerLink="/LearnSCA">Single Choice</a>
+        <a routerLink="/LearnFIA">Fill In</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Check
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <a routerLink="/CMC">Multiple Choice</a>
+        <a routerLink="/CSC">Single Choice</a>
+        <a routerLink="/CFI">Fill In</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Exam
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <a routerLink="/EMC">Multiple Choice</a>
+        <a routerLink="/ESC">Single Choice</a>
+        <a routerLink="/EFI">Fill In</a>
+      </div>
+    </div>
+  </div>
 
-<div *ngIf="!examresult">
+  <div *ngIf="!examresult">
     <div *ngIf="!gotolearnmode">
-      <button type="button" class="btn btn-outline-dark" (click)="firstQuery()">
-        first
-      </button>
-      |
-      <button type="button" class="btn btn-outline-primary" (click)="prevQuery()">
-        prev
-      </button>
-      |
-      <button type="button" class="btn btn-outline-primary" (click)="nextQuery()">
-        next
-      </button>
-      |
-      <button
-        type="button"
-        class="btn btn-outline-secondary"
-        (click)="lastQuery()"
-      >
-        last
-      </button>
-      --
-      <!-- <button
-    type="button"
-    class="btn btn-outline-success"
-    (click)="toggleAnswers(query.qid)"
-  >
-  correct is
-  </button>
-  --
-  -->
-      <button type="button" class="btn btn-warning" (click)="examEnd()">
-        End Exam
-      </button>
-  
-      <!-- <llceae-check-stats></llceae-check-stats> -->
-  
+      <!-- <button type="button" class="button" (click)="firstQuery()">first</button> -->
+      <button type="button" class="button" (click)="prevQuery()">prev</button>
+      <button type="button" class="button" (click)="nextQuery()">next</button>
+      <!-- <button type="button" class="button" (click)="lastQuery()">last</button> -->
+      <button type="button" class="button" (click)="examEnd()">End Exam</button>
+
       <p>Question: {{ query.qid }} | Typ: {{ query.qtyp }} <br /></p>
-  
+
       <div *ngFor="let qt of query.qtxt">
         <span *ngIf="qt[0] === ' '"> _ {{ qt }} <br /> </span>
         <span *ngIf="qt[0] != ' '"> {{ qt }} <br /> </span>
@@ -46,46 +50,32 @@
       <!-- SC -->
       <div *ngIf="query.qtyp === 'sc'">
         <div *ngFor="let ans of query.qanswers; index as ansind">
-          <span *ngIf="showanswers">
+          <span *ngIf="sa">
             <span *ngIf="ans.correct">
-              <span *ngIf="queryNrAnswersShow === query.qid" class="boldgreen">
-                <input
-                  type="radio"
-                  (click)="ans.givenans = !ans.givenans"
-                  checked
-                  disabled
-                />
-                {{ ansind + 1 }}: {{ ans.txt }} ++ {{ ans.correct }}:
-                {{ ans.givenans }}
+              <span *ngIf="queryNrAnswersShow === query.qid" class="green">
+                <input type="radio" (click)="ans.givenans = !ans.givenans" checked disabled />
+                {{ ansind + 1 }}: {{ ans.txt }}
               </span>
             </span>
             <span *ngIf="!ans.correct">
               <span *ngIf="queryNrAnswersShow === query.qid">
-                <input
-                  type="radio"
-                  (click)="changeGivenAnswer(ansind)"
-                  disabled
-                />
-                {{ ansind + 1 }}: {{ ans.txt }} ++ {{ ans.correct }}:
-                {{ ans.givenans }}
+                <input type="radio" (click)="changeGivenAnswer(ansind)" disabled />
+                {{ ansind + 1 }}: {{ ans.txt }}
               </span>
             </span>
             <span *ngIf="queryNrAnswersShow != query.qid">
               <input type="radio" (click)="changeGivenAnswer(ansind)" disabled />
-              {{ ansind + 1 }}: {{ ans.txt }} ++ {{ ans.correct }}:
-              {{ ans.givenans }}
+              {{ ansind + 1 }}: {{ ans.txt }}
             </span>
           </span>
-          <span *ngIf="!showanswers">
+          <span *ngIf="!sa">
             <div *ngIf="ans.givenans">
               <input type="radio" (click)="changeGivenAnswer(ansind)" checked />
-              {{ ansind + 1 }}: {{ ans.txt }} ++ {{ ans.correct }}:
-              {{ ans.givenans }}
+              {{ ansind + 1 }}: {{ ans.txt }}
             </div>
             <div *ngIf="!ans.givenans">
               <input type="radio" (click)="changeGivenAnswer(ansind)" />
-              {{ ansind + 1 }}: {{ ans.txt }} ++ {{ ans.correct }}:
-              {{ ans.givenans }}
+              {{ ansind + 1 }}: {{ ans.txt }}
             </div>
           </span>
         </div>
@@ -95,17 +85,14 @@
     <div *ngIf="gotolearnmode">
       <h1>Please go to LEARN mode</h1>
       <h2>-- refueling some spirit ;) --</h2>
-      <button class="btn btn-warning" routerLink="/learning">
+      <button class="button" routerLink="/learning">
         I go to Learn Mode!
       </button>
     </div>
   </div>
-  
+
   <div *ngIf="examresult">
-    <button
-      class="btn btn-warning"
-      (click)="showResultQuestions = !showResultQuestions"
-    >
+    <button class="button" (click)="showResultQuestions = !showResultQuestions">
       Show my Exam Questions
     </button>
     <div class="statistics">
@@ -120,46 +107,45 @@
         <li>Not answered: {{ statistic.qnotanswered }} <br /></li>
       </ul>
     </div>
-  
-    <button class="btn btn-warning" routerLink="/home">Ok! Back to home!</button>
-  
-    <!-- show exam question results correct/wrong -->
+
+    <button class="button" routerLink="/home">Ok! Back to home!</button>
+
     <div *ngIf="showResultQuestions">
       <h3>Answered questions with correct/wrong answers!</h3>
       <div *ngFor="let query of ql101Scall">
         <p>Question: {{ query.qid }} | Typ: {{ query.qtyp }} <br /></p>
-  
+
         <div *ngFor="let qt of query.qtxt">
           <span *ngIf="qt[0] === ' '"> _ {{ qt }} <br /> </span>
           <span *ngIf="qt[0] != ' '"> {{ qt }} <br /> </span>
         </div>
-        <!-- SC -->
+
         <div *ngIf="query.qtyp === 'sc'">
           <div *ngFor="let ans of query.qanswers; index as ansind">
-            <span *ngIf="showanswers">
+            <span *ngIf="sa">
               <span *ngIf="ans.correct && ans.givenans">
-                <span class="boldgreen">
+                <span class="green">
                   <input type="radio" checked disabled />
                   {{ ansind + 1 }}: {{ ans.txt }} ++ {{ ans.correct }}:
                   {{ ans.givenans }}
                 </span>
               </span>
               <span *ngIf="ans.correct && !ans.givenans">
-                <span class="boldblue">
+                <span class="blue">
                   <input type="radio" disabled checked />
                   {{ ansind + 1 }}: {{ ans.txt }} ++ {{ ans.correct }}:
                   {{ ans.givenans }}
                 </span>
               </span>
-  
+
               <span *ngIf="!ans.correct && ans.givenans">
-                <span class="boldred">
+                <span class="red">
                   <input type="radio" disabled />
                   {{ ansind + 1 }}: {{ ans.txt }} ++ {{ ans.correct }}:
                   {{ ans.givenans }}
                 </span>
               </span>
-  
+
               <span *ngIf="!ans.correct && !ans.givenans">
                 <input type="radio" disabled />
                 {{ ansind + 1 }}: {{ ans.txt }} ++ {{ ans.correct }}:
@@ -172,4 +158,3 @@
       </div>
     </div>
   </div>
-  

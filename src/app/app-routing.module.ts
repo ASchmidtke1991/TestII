@@ -13,6 +13,9 @@ import { CscComponent } from './Check/csc/csc.component';
 import { CfiComponent } from './Check/cfi/cfi.component';
 import { HomeComponent } from './home/home.component';
 import { EaComponent } from './Exam/ea/ea.component';
+import { EMCComponent } from './Exam/emc/emc.component';
+import { ESCComponent } from './Exam/esc/esc.component';
+import { EFIComponent } from './Exam/efi/efi.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -27,7 +30,10 @@ const routes: Routes = [
   { path: 'CMC', component: CmcComponent},
   { path: 'CSC', component: CscComponent},
   { path: 'CA', component: CaComponent},
-  { path: 'EA', component: EaComponent}
+  { path: 'EA', component: EaComponent},
+  { path: 'EMC', component: EMCComponent},
+  { path: 'ESC', component: ESCComponent},
+  { path: 'EFI', component: EFIComponent}
 ];
 
 @NgModule({

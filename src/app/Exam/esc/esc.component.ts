@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { SCQ } from 'src/app/Interface/scq';
+import { Stats } from 'src/app/Interface/stats';
+import { LpicService } from 'src/app/Shared/lpic.service';
+import { StatsService } from 'src/app/Shared/stats.service';
 
 @Component({
   selector: 'app-esc',
@@ -7,15 +11,15 @@ import { Component } from '@angular/core';
 })
 export class ESCComponent {
 
-  ql101Scall: ScQuery[] = []
+  ql101Scall: SCQ[] = []
 
-  showanswers = false
+  sa = false
   queryNrAnswersShow = -1
 
-  query: ScQuery;
+  query: SCQ;
   currentQnr = -1
 
-  statistic: Statistics;
+  statistic: Stats;
   gotolearnmode: boolean
 
   // maxexamwrong in %
@@ -27,10 +31,10 @@ export class ESCComponent {
   showResultQuestions = false
 
   constructor(
-    private ql101Sc: Qlpic101Service,
+    private ql101Sc: LpicService,
     private stats: StatsService
   ) {
-    this.ql101Scall = this.ql101Sc.getallSc()
+    this.ql101Scall = this.ql101Sc.getSC()
     this.ql101Sc.initGivenAnswers()
 
     this.statistic = this.stats.calcStatsSc()
@@ -64,7 +68,7 @@ export class ESCComponent {
   firstQuery() {
     this.currentQnr = 0
     this.query = this.ql101Scall[this.currentQnr]
-    this.showanswers = false
+    this.sa = false
     this.refreshStats()
   }
 
@@ -73,7 +77,7 @@ export class ESCComponent {
       this.currentQnr--
       this.query = this.ql101Scall[this.currentQnr]
     }
-    this.showanswers = false
+    this.sa = false
     this.refreshStats()
   }
 
@@ -118,23 +122,23 @@ export class ESCComponent {
       this.query = this.ql101Scall[this.currentQnr]
       console.log(this.currentQnr, this.query)
     }
-    this.showanswers = false
+    this.sa = false
     this.refreshStats()
   }
 
   lastQuery() {
     this.currentQnr = this.ql101Scall.length - 1
     this.query = this.ql101Scall[this.currentQnr]
-    this.showanswers = false
+    this.sa = false
     this.refreshStats()
   }
 
   toggleAnswers(qid: number): void {
     if (this.queryNrAnswersShow != qid) {
       this.queryNrAnswersShow = qid;
-      this.showanswers = true
+      this.sa = true
     } else {
-      this.showanswers = !this.showanswers
+      this.sa = !this.sa
     }
     this.refreshStats()
   }
@@ -179,8 +183,7 @@ export class ESCComponent {
   examEnd() {
     this.refreshStats()
     this.examresult = true
-    this.showanswers = true
+    this.sa = true
   }
 }
 
-}

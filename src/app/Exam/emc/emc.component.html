@@ -1,41 +1,45 @@
-<p>emc works!</p>
+<body>
+  <div class="navbar">
+    <a routerLink="/home">Home</a>
+    <div class="dropdown">
+      <button class="dropbtn">Learn
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <a routerLink="/LearnMCA">Multiple Choice</a>
+        <a routerLink="/LearnSCA">Single Choice</a>
+        <a routerLink="/LearnFIA">Fill In</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Check
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <a routerLink="/CMC">Multiple Choice</a>
+        <a routerLink="/CSC">Single Choice</a>
+        <a routerLink="/CFI">Fill In</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Exam
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <a routerLink="/EMC">Multiple Choice</a>
+        <a routerLink="/ESC">Single Choice</a>
+        <a routerLink="/EFI">Fill In</a>
+      </div>
+    </div>
+  </div>
 
 <div *ngIf="!examresult">
     <div *ngIf="!gotolearnmode">
-      <button type="button" class="btn btn-outline-dark" (click)="firstQuery()">
-        first
-      </button>
-      |
-      <button type="button" class="btn btn-outline-primary" (click)="prevQuery()">
-        prev
-      </button>
-      |
-      <button type="button" class="btn btn-outline-primary" (click)="nextQuery()">
-        next
-      </button>
-      |
-      <button
-        type="button"
-        class="btn btn-outline-secondary"
-        (click)="lastQuery()"
-      >
-        last
-      </button>
-      --
-      <!-- <button
-    type="button"
-    class="btn btn-outline-success"
-    (click)="toggleAnswers(query.qid)"
-  >
-  correct is
-  </button>
-  --
-  -->
-      <button type="button" class="btn btn-warning" (click)="examEnd()">
-        End Exam
-      </button>
-  
-      <!-- <llceae-check-stats></llceae-check-stats> -->
+      <!-- <button type="button" class="button" (click)="firstQuery()">first</button> -->
+      <button type="button" class="button" (click)="prevQuery()">prev</button>
+      <button type="button" class="button" (click)="nextQuery()">next</button>
+      <!-- <button type="button" class="button" (click)="lastQuery()">last</button> -->
+      <button type="button" class="button" (click)="examEnd()">End Exam</button>
   
       <p>Question: {{ query.qid }} | Typ: {{ query.qtyp }} <br /></p>
   
@@ -43,18 +47,13 @@
         <span *ngIf="qt[0] === ' '"> _ {{ qt }} <br /> </span>
         <span *ngIf="qt[0] != ' '"> {{ qt }} <br /> </span>
       </div>
-      <!-- MC -->
+
       <div *ngIf="query.qtyp === 'mc'">
         <div *ngFor="let ans of query.qanswers; index as ansind">
           <span *ngIf="showanswers">
             <span *ngIf="ans.correct">
-              <span *ngIf="queryNrAnswersShow === query.qid" class="boldgreen">
-                <input
-                  type="checkbox"
-                  (click)="ans.givenans = !ans.givenans"
-                  checked
-                  disabled
-                />
+              <span *ngIf="queryNrAnswersShow === query.qid" class="green">
+                <input type="checkbox" (click)="ans.givenans = !ans.givenans" checked disabled/>
                 {{ ansind + 1 }}: {{ ans.txt }} ++ {{ ans.correct }}:
                 {{ ans.givenans }}
               </span>
@@ -103,13 +102,13 @@
     <div *ngIf="gotolearnmode">
       <h1>Please go to LEARN mode</h1>
       <h2>-- refueling some spirit ;) --</h2>
-    <button class="btn btn-warning" routerLink="/learning">I go to Learn Mode!</button>
+    <button class="button" routerLink="/learning">I go to Learn Mode!</button>
     </div>
   </div>
   
   <div *ngIf="examresult">
     <button
-      class="btn btn-warning"
+      class="button"
       (click)="showResultQuestions = !showResultQuestions"
     >
       Show my Exam Questions
@@ -127,9 +126,8 @@
       </ul>
     </div>
   
-    <button class="btn btn-warning" routerLink="/home">Ok! Back to home!</button>
+    <button class="button" routerLink="/home">Ok! Back to home!</button>
   
-    <!-- show exam question results correct/wrong -->
     <div *ngIf="showResultQuestions">
       <h3>Answered questions with correct/wrong answers!</h3>
       <div *ngFor="let query of ql101mcall">
@@ -139,12 +137,12 @@
           <span *ngIf="qt[0] === ' '"> _ {{ qt }} <br /> </span>
           <span *ngIf="qt[0] != ' '"> {{ qt }} <br /> </span>
         </div>
-        <!-- MC -->
+
         <div *ngIf="query.qtyp === 'mc'">
           <div *ngFor="let ans of query.qanswers; index as ansind">
             <span *ngIf="showanswers">
               <span *ngIf="ans.correct && ans.givenans">
-                <span  class="boldgreen">
+                <span  class="green">
                   <input
                     type="checkbox"
                     checked
@@ -155,7 +153,7 @@
                 </span>
               </span>
               <span *ngIf="ans.correct && !ans.givenans">
-                <span class="boldblue">
+                <span class="blue">
                   <input
                     type="checkbox"
                     disabled
@@ -167,7 +165,7 @@
               </span>
   
               <span *ngIf="!ans.correct && ans.givenans">
-                <span class="boldred">
+                <span class="red">
                   <input
                     type="checkbox"
                     disabled

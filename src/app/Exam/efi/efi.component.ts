@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { FIQ } from 'src/app/Interface/fiq';
+import { Stats } from 'src/app/Interface/stats';
+import { LpicService } from 'src/app/Shared/lpic.service';
+import { StatsService } from 'src/app/Shared/stats.service';
 
 @Component({
   selector: 'app-efi',
@@ -6,18 +10,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./efi.component.css']
 })
 export class EFIComponent {
-
-  ql101Fiall: FiQuery[] = []
-
-  showanswers = false
+  ql101Fiall: FIQ[] = []
+  sa = false
   queryNrAnswersShow = -1
-
-  query: FiQuery;
+  query: FIQ;
   currentQnr = -1
-
-  statistic: Statistics;
+  statistic: Stats;
   correctInput: boolean = false;
-
   gotolearnmode: boolean
   learnwrong: number
   maxlearnwrong = 3
@@ -31,10 +30,10 @@ export class EFIComponent {
   showResultQuestions = false
 
   constructor(
-    private ql101Fi: Qlpic101Service,
+    private ql101Fi: LpicService,
     private stats: StatsService
   ) {
-    this.ql101Fiall = this.ql101Fi.getallFi()
+    this.ql101Fiall = this.ql101Fi.getFI()
     this.ql101Fi.initGivenAnswers()
 
     this.statistic = this.stats.calcStatsFi()
@@ -45,15 +44,12 @@ export class EFIComponent {
     this.examwrong = 0
     this.learnwrong = 0
   }
-
-
   resetStats() {
     this.statistic = this.stats.resetStatsFi()
     this.firstQuery()
     this.gotolearnmode = false
     this.examwrong = 0
   }
-
   resetAnswers() {
     // reset 'givenanswer's of all questions
     this.ql101Fiall.map(q => q.qanswers.map(a => a.givenans = false))
@@ -61,27 +57,23 @@ export class EFIComponent {
     this.firstQuery()
     this.examwrong = 0
   }
-
   refreshStats() {
     this.statistic = this.stats.calcStatsFi()
   }
-
   firstQuery() {
     this.currentQnr = 0
     this.query = this.ql101Fiall[this.currentQnr]
-    this.showanswers = false
+    this.sa = false
     this.refreshStats()
   }
-
   prevQuery() {
     if (0 < this.currentQnr) {
       this.currentQnr--
       this.query = this.ql101Fiall[this.currentQnr]
     }
-    this.showanswers = false
+    this.sa = false
     this.refreshStats()
   }
-
   nextQuery() {
     // ------------------------------------------------------
     // check if current question answered and correct -> next
@@ -116,39 +108,34 @@ export class EFIComponent {
     this.setNextQuestion()
     // console.log('curr q: ', this.currentQnr)
   }
-
   setNextQuestion() {
     if (this.currentQnr < this.ql101Fiall.length - 1) {
       this.currentQnr++
       this.query = this.ql101Fiall[this.currentQnr]
       console.log(this.currentQnr, this.query)
     }
-    this.showanswers = false
+    this.sa = false
     this.refreshStats()
   }
-
   lastQuery() {
     this.currentQnr = this.ql101Fiall.length - 1
     this.query = this.ql101Fiall[this.currentQnr]
-    this.showanswers = false
+    this.sa = false
     this.refreshStats()
   }
-
   toggleAnswers(qid: number): void {
     if (this.queryNrAnswersShow != qid) {
       this.queryNrAnswersShow = qid;
-      this.showanswers = true
+      this.sa = true
     } else {
-      this.showanswers = !this.showanswers
+      this.sa = !this.sa
     }
     this.refreshStats()
   }
-
   toggleGivenAnswer(ansind: number) {
     this.query.qanswers[ansind].givenans = !this.query.qanswers[ansind].givenans
     this.refreshStats()
   }
-
   checkQueryFiAnswered() {
     // answered? (is one answer given 'true')
     if (this.query.qanswers.find(a => a.givenans === true)) {
@@ -160,7 +147,6 @@ export class EFIComponent {
       return false
     }
   }
-
   checkQueryFiAnsweredCorrect() {
     // correct answered? (are all givenans equal correct)
     if (this.query.qanswers.find(a => a.givenans != a.correct)) {
@@ -175,9 +161,8 @@ export class EFIComponent {
   examEnd() {
     this.refreshStats()
     this.examresult = true
-    this.showanswers = true
+    this.sa = true
   }
-
   keyinput(myinput: string) {
     this.correctInput = false
     this.query.qgiventxt = myinput
@@ -189,7 +174,4 @@ export class EFIComponent {
     console.log(this.correctInput, this.query.qgiventxt)
     this.refreshStats()
   }
-
-}
-
 }
