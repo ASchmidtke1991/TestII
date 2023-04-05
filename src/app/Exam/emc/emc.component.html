@@ -101,18 +101,13 @@
     </div>
     <div *ngIf="gotolearnmode">
       <h1>Please go to LEARN mode</h1>
-      <h2>-- refueling some spirit ;) --</h2>
-    <button class="button" routerLink="/learning">I go to Learn Mode!</button>
+      <h2>-- Lerne mehr --</h2>
+    <button class="button" routerLink="/learning">Lerne mehr</button>
     </div>
   </div>
   
   <div *ngIf="examresult">
-    <button
-      class="button"
-      (click)="showResultQuestions = !showResultQuestions"
-    >
-      Show my Exam Questions
-    </button>
+    <button class="button" (click)="showResultQuestions = !showResultQuestions">Show my Exam Questions</button>
     <div class="statistics">
       <h1>Your Exam Result</h1>
       Number of Questions: {{ statistic.qmaxnumber }} <br />
@@ -126,7 +121,7 @@
       </ul>
     </div>
   
-    <button class="button" routerLink="/home">Ok! Back to home!</button>
+    <button class="button" routerLink="/home">Ok! Zurück zum Home!</button>
   
     <div *ngIf="showResultQuestions">
       <h3>Answered questions with correct/wrong answers!</h3>

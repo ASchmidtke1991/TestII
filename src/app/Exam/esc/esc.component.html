@@ -35,10 +35,8 @@
 
   <div *ngIf="!examresult">
     <div *ngIf="!gotolearnmode">
-      <!-- <button type="button" class="button" (click)="firstQuery()">first</button> -->
       <button type="button" class="button" (click)="prevQuery()">prev</button>
       <button type="button" class="button" (click)="nextQuery()">next</button>
-      <!-- <button type="button" class="button" (click)="lastQuery()">last</button> -->
       <button type="button" class="button" (click)="examEnd()">End Exam</button>
 
       <p>Question: {{ query.qid }} | Typ: {{ query.qtyp }} <br /></p>
@@ -47,7 +45,6 @@
         <span *ngIf="qt[0] === ' '"> _ {{ qt }} <br /> </span>
         <span *ngIf="qt[0] != ' '"> {{ qt }} <br /> </span>
       </div>
-      <!-- SC -->
       <div *ngIf="query.qtyp === 'sc'">
         <div *ngFor="let ans of query.qanswers; index as ansind">
           <span *ngIf="sa">
@@ -83,11 +80,9 @@
       <hr />
     </div>
     <div *ngIf="gotolearnmode">
-      <h1>Please go to LEARN mode</h1>
-      <h2>-- refueling some spirit ;) --</h2>
-      <button class="button" routerLink="/learning">
-        I go to Learn Mode!
-      </button>
+      <h1>Gehe zum Lern Modus</h1>
+      <h2>-- Lerne mehr --</h2>
+      <button class="button" routerLink="/learning">Zum Lernen</button>
     </div>
   </div>
 
@@ -108,7 +103,7 @@
       </ul>
     </div>
 
-    <button class="button" routerLink="/home">Ok! Back to home!</button>
+    <button class="button" routerLink="/home">Ok! Zurück zum Home!</button>
 
     <div *ngIf="showResultQuestions">
       <h3>Answered questions with correct/wrong answers!</h3>

@@ -63,3 +63,8 @@
 .h1{
   text-align: center;
 }
+.h2 {
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-style: double; 
+}
